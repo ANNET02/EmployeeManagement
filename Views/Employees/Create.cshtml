@@ -1,0 +1,82 @@
+﻿@model EmployeeManagement.Models.Employee
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" id="createForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Position" class="control-label"></label>
+                <input asp-for="Position" class="form-control" />
+                <span asp-validation-for="Position" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Department" class="control-label"></label>
+                <input asp-for="Department" class="form-control" />
+                <span asp-validation-for="Department" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary" class="control-label"></label>
+                <input asp-for="Salary" class="form-control" />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<!-- Success Alert -->
+<div class="alert alert-success mt-3" id="successAlert" style="display:none;">
+    Employee created successfully!
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#createForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            $.ajax({
+                
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function (response) {
+                    debugger;
+                    // If the creation is successful, show the success alert
+                    $('#successAlert').fadeIn();
+
+                    // Optionally, you can clear the form fields
+                    $('#createForm')[0].reset();
+                },
+                error: function () {
+                    alert('An error occurred while creating the employee.');
+                }
+            });
+        });
+    });
+
+
+</script>
